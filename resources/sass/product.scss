@@ -1,0 +1,28 @@
+.product-row {
+  padding: 8px 0;
+  &.product-fields {
+    border-bottom: 1px solid #ddd;
+  }
+}
+.cat-row {
+  font-weight: bold;
+  span {
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      display: block;
+      border: 6px solid transparent;
+      border-left-color: #333;
+      top: 4px;
+      left: -12px;
+    }
+  }
+}
+@for $i from 1 through 10 {
+  .pll-#{$i} {
+    padding-left:  $i * 10px;
+  }
+}
