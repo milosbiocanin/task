@@ -55,7 +55,7 @@
 				@method('post')
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title">Add a new team member</h3>
+            <h3 class="modal-title">Add a new user</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -73,7 +73,12 @@
                 <input type="email" class="form-control form-control-sm" name="email" required/>
               </div>
             </div>
-
+            <div class="form-group row">
+              <div class="text-right form-label col-sm-4">PASSWORD</div>
+              <div class="col-sm-8">
+                <input type="password" class="form-control form-control-sm" name="password" required/>
+              </div>
+            </div>
             <div class="form-group row">
               <div class="text-right form-label col-sm-4">ROLE</div>
               <div class="col-sm-8">

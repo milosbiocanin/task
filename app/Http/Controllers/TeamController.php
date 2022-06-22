@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InviteMail;
+use Illuminate\Support\Facades\Hash;
 
 class TeamController extends Controller
 {
@@ -40,27 +41,28 @@ class TeamController extends Controller
       $member->name = $data['name'];
       $member->email = $data['email'];
       $member->level = $data['role'];
-      $member->password = '';
+      $member->password = Hash::make($data['password']);
       $member->company_id = auth()->user()->company_id;
+      $member->api_token = Str::random(60);
       $member->last_login = date('Y-m-d H:i:s');
       $member->save();
       //Create Password Reset Token
-      DB::table('password_resets')->insert([
-        'email' => $data['email'],
-        'token' => Str::random(60),
-        'created_at' => date('Y-m-d H:i:s')
-      ]);
+      // DB::table('password_resets')->insert([
+      //   'email' => $data['email'],
+      //   'token' => Str::random(60),
+      //   'created_at' => date('Y-m-d H:i:s')
+      // ]);
       //Get the token just created above
-      $tokenData = DB::table('password_resets')
-        ->where('email', $data['email'])->first();
+      // $tokenData = DB::table('password_resets')
+      //   ->where('email', $data['email'])->first();
         
-      $link = url('/') . '/password/reset/' . $tokenData->token . '?invite=1&email=' . urlencode($data['email']);
-			$data['link'] = $link;
-			$data['sender'] = auth()->user()->name;
-			$data['team'] = $data['name'];
-			$data['company'] = auth()->user()->profile->company;
-			$data['subject'] = "{$data['sender']} has invited you to join {$data['company']} on Priority.";
-      $this->sendInviteEmail($data['email'], $data);
+      // $link = url('/') . '/password/reset/' . $tokenData->token . '?invite=1&email=' . urlencode($data['email']);
+			// $data['link'] = $link;
+			// $data['sender'] = auth()->user()->name;
+			// $data['team'] = $data['name'];
+			// $data['company'] = auth()->user()->profile->company;
+			// $data['subject'] = "{$data['sender']} has invited you to join {$data['company']} on Priority.";
+      // $this->sendInviteEmail($data['email'], $data);
     }
 		return back()->withStatus( __('Team member successfully created.'));
 	}

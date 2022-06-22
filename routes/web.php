@@ -36,6 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/business', ['as' => 'business.update', 'uses' => 'App\Http\Controllers\BusinessController@update']);
 	Route::post('profile/business/updateLogo', ['as' => 'business.updateLogo', 'uses' => 'App\Http\Controllers\BusinessController@updateLogo']);
 	Route::get('products', function () {
+    if (auth()->user()->level == 2) {
+      return redirect('/home');
+    }
 		$token = Str::random(60);
 		auth()->user()->forceFill([
 			'api_token' => hash('sha256', $token),
@@ -43,6 +46,9 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('pages.products');}
 	)->name('products');
   Route::get('categories', function () {
+    if (auth()->user()->level == 2) {
+      return redirect('/home');
+    }
 		$token = Str::random(60);
 		auth()->user()->forceFill([
 			'api_token' => hash('sha256', $token),
